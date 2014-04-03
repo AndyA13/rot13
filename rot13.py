@@ -1,16 +1,17 @@
 import sys
 
+
 class Rot13(object):
 
     def translate(self, input_text):
 
         rot_map = {}
 
-        # a to z
-        self.add_to_dictionary(rot_map, 65, 91)
-        
         # A to Z
-        self.add_to_dictionary(rot_map, 97, 123)
+        rot_map.update(self.get_rot_values("A", "Z"))
+
+        # a to z
+        rot_map.update(self.get_rot_values("a", "z"))
 
         output = ""
 
@@ -20,16 +21,23 @@ class Rot13(object):
 
         return output
 
-    def add_to_dictionary(self, rot_map, start, end):
+    def get_rot_values(self, start, end):
 
-        split_point = start + ((end - start) / 2)
+        ord_start = ord(start)
+        ord_end = ord(end)
 
-        for ascii_code in range(start, end):
+        split_point = ord_start + ((ord_end - ord_start) / 2)
 
-            if ascii_code >= split_point:
-                rot_map[chr(ascii_code)] = chr(ascii_code - 13)
+        values = {}
+
+        for ascii_code in range(ord_start, ord_end + 1):
+
+            if ascii_code > split_point:
+                values[chr(ascii_code)] = chr(ascii_code - 13)
             else:
-                rot_map[chr(ascii_code)] = chr(ascii_code + 13)
+                values[chr(ascii_code)] = chr(ascii_code + 13)
+
+        return values
 
 if __name__ == "__main__":
     rot13 = Rot13()

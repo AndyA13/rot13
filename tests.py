@@ -1,7 +1,6 @@
-
 import unittest
-
 from rot13 import Rot13
+
 
 class Tests(unittest.TestCase):
 
@@ -12,8 +11,8 @@ class Tests(unittest.TestCase):
 
         test_dict = {}
 
-        encryptor.add_to_dictionary(test_dict, 97, 123)
-        
+        test_dict.update(encryptor.get_rot_values("a", "z"))
+
         self.assertEqual(26, len(test_dict))
 
         # test a few points and edge cases
@@ -27,7 +26,7 @@ class Tests(unittest.TestCase):
     def test_rot13_encryption(self):
 
         encryptor = Rot13()
-        
+
         test_input = "My test string."
 
         output = encryptor.translate(test_input)
